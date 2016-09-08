@@ -8,16 +8,42 @@ using System.Threading.Tasks;
 
 namespace DeployToFtp
 {
+    /// <summary>
+    /// Класс, реализующий простой FTP-клиент.
+    /// </summary>
     class FtpClient
     {
+        /// <summary>
+        /// Внутренний объект FTP-запроса
+        /// </summary>
         private FtpWebRequest _ftpRequest;
+        /// <summary>
+        /// Внутренний объект ответа FTP-сервера
+        /// </summary>
         private FtpWebResponse _ftpResponce;
 
+        /// <summary>
+        /// Адрес FTP-сервера
+        /// </summary>
         public string Host { get; set; }
+        /// <summary>
+        /// Имя пользователя для подключения к FTP-серверу
+        /// </summary>
         public string UserName { get; set; }
+        /// <summary>
+        /// Пароль для подключения к FTP-серверу
+        /// </summary>
         public string Password { get; set; }
+        /// <summary>
+        /// Флаг, отвечающий за использование FTP-сервером SSL-шифрования
+        /// </summary>
         public bool UseSsl { get; set; }
 
+        /// <summary>
+        /// Реализует команду <code>LIST</code> для плолучения с FTP-сервера подробного списка файлов.
+        /// </summary>
+        /// <param name="directory"></param>
+        /// <returns></returns>
         public FileStruct[] ListDirectory(string directory)
         {
             if (string.IsNullOrEmpty(directory))
@@ -41,14 +67,6 @@ namespace DeployToFtp
             return parser.FullListing;
         }
 
-    }
-
-    struct FileStruct
-    {
-        public string Flags;
-        public string Owner;
-        public bool IsDirectory;
-        public string CreateTime;
-        public string Name;
+        
     }
 }

@@ -5,6 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace DeployToFtp
 {
+    /// <summary>
+    /// Класс-парсер, извлекающий информацию о файлах и директориях из строки-ответа FTP-сервера
+    /// </summary>
     internal class DirectoryListParser
     {
         /// <summary>
