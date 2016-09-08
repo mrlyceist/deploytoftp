@@ -8,4 +8,12 @@
     <text>Тесты DirectoryListParser'а</text>
     <finished>false</finished>
   </item>
+  <item>
+    <text>ftpClient ctor</text>
+    <finished>false</finished>
+  </item>
+  <item>
+    <text>что-то с путями не то</text>
+    <finished>false</finished>
+  </item>
 </Tasks>
