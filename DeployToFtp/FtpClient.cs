@@ -20,8 +20,10 @@ namespace DeployToFtp
 
         public FileStruct[] ListDirectory(string directory)
         {
-            if (directory == null || directory == string.Empty)
+            if (string.IsNullOrEmpty(directory))
                 directory = "/";
+
+            string content = string.Empty;
 
             _ftpRequest = (FtpWebRequest)WebRequest.Create($"ftp://{Host}{directory}");
             _ftpRequest.Credentials = new NetworkCredential(UserName, Password);
@@ -29,8 +31,6 @@ namespace DeployToFtp
             _ftpRequest.EnableSsl = UseSsl;
 
             _ftpResponce = (FtpWebResponse)_ftpRequest.GetResponse();
-
-            string content = string.Empty;
 
             StreamReader reader = new StreamReader(_ftpResponce.GetResponseStream(), Encoding.ASCII);
             content = reader.ReadToEnd();
