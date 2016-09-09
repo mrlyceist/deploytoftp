@@ -26,6 +26,7 @@ namespace DeployToFtp
         /// Адрес FTP-сервера
         /// </summary>
         public string Host { get; set; }
+
         /// <summary>
         /// Имя пользователя для подключения к FTP-серверу
         /// </summary>
@@ -65,6 +66,27 @@ namespace DeployToFtp
 
             DirectoryListParser parser = new DirectoryListParser(content);
             return parser.FullListing;
+        }
+
+        internal string ListDirectoryString(string directory)
+        {
+            if (string.IsNullOrEmpty(directory))
+                directory = "/";
+
+            string content = string.Empty;
+
+            _ftpRequest = (FtpWebRequest)WebRequest.Create($"ftp://{Host}{directory}");
+            _ftpRequest.Credentials = new NetworkCredential(UserName, Password);
+            _ftpRequest.EnableSsl = UseSsl;
+            _ftpRequest.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+            using (_ftpResponce = (FtpWebResponse)_ftpRequest.GetResponse())
+            {
+                using (StreamReader reader = new StreamReader(_ftpResponce.GetResponseStream(), Encoding.ASCII))
+                {
+                    content = reader.ReadToEnd();
+                }
+            }
+            return content;
         }
 
         /// <summary>

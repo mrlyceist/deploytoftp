@@ -23,9 +23,17 @@ namespace DeployToFtp
             ftp.UserName = _userName;
             ftp.Password = _password;
 
-            FileStruct[] files = ftp.ListDirectory(string.Empty);
+            string responce = ftp.ListDirectoryString(string.Empty);
 
-            Console.WriteLine(files.Length);
+            //FileStruct[] files = ftp.ListDirectory(string.Empty);
+
+            //Console.WriteLine(files.Length);
+            //foreach (var file in files)
+            //{
+            //var str = $"{file.Name}";
+            //Console.WriteLine($"{file.Name}");//, dir:{file.IsDirectory}, {file.CreateTime}, {file.Owner}");
+            //}
+            Console.WriteLine(responce);
             Console.ReadLine();
         }
     }
