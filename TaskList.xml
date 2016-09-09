@@ -16,4 +16,8 @@
     <text>что-то с путями не то</text>
     <finished>false</finished>
   </item>
+  <item>
+    <text>replace code tags in docs</text>
+    <finished>false</finished>
+  </item>
 </Tasks>
