@@ -1,16 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Tasks>
   <item>
-    <text>processString extract reduce method</text>
-    <finished>true</finished>
-  </item>
-  <item>
-    <text>ftpClient ctor</text>
-    <finished>true</finished>
-  </item>
-  <item>
     <text>что-то с путями не то</text>
-    <finished>false</finished>
+    <finished>true</finished>
   </item>
   <item>
     <text>replace code tags in docs</text>
@@ -25,7 +17,11 @@
     <finished>false</finished>
   </item>
   <item>
-    <text>createtime - to DateTime obj</text>
+    <text>Все-таки, файлы в List&lt;&gt;</text>
     <finished>true</finished>
+  </item>
+  <item>
+    <text>проверка тупо на число аргументов</text>
+    <finished>false</finished>
   </item>
 </Tasks>

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Text;
 
@@ -40,7 +41,7 @@ namespace DeployToFtp
         /// </summary>
         /// <param name="directory">Директория на сервере, содержимое которой будет запрошено</param>
         /// <returns>Массив файлов <seealso cref="FileStruct"/></returns>
-        public FileStruct[] ListDirectory(string directory)
+        public List<FileStruct> ListDirectory(string directory)
         {
             if (string.IsNullOrEmpty(directory))
                 directory = "/";
@@ -120,7 +121,7 @@ namespace DeployToFtp
             using (FileStream uploadFile = new FileStream(fileName, FileMode.Open, FileAccess.Read))
             {
                 _ftpRequest = Initialize($"{path}{shortName}");
-                _ftpRequest.Method = WebRequestMethods.File.UploadFile;
+                _ftpRequest.Method = WebRequestMethods.Ftp.UploadFile;
 
                 fileToBytes = new byte[uploadFile.Length];
                 uploadFile.Read(fileToBytes, 0, fileToBytes.Length);
@@ -147,7 +148,7 @@ namespace DeployToFtp
         /// <summary>
         /// Реализует метод протокола <code>FTP MKD</code> для создания каталога на FTP-сервере
         /// </summary>
-        /// <param name="path">Путь к создаваемому каталогу на сервере</param>
+        /// <param name="path">Путь к создаваемому каталогу на сервере, включая завершающий слэш (/)</param>
         /// <param name="folderName">Имя создаваемого каталога</param>
         public void CreateDirectory(string path, string folderName)
         {
@@ -172,9 +173,14 @@ namespace DeployToFtp
             _ftpResponce.Close();
         }
 
+        /// <summary>
+        /// Инициализирует запрос к FTP-серверу, используя полученные реквизиты.
+        /// </summary>
+        /// <param name="path">Путь, передаваемый в запрос</param>
+        /// <returns>Запрос к FTP-серверу</returns>
         private FtpWebRequest Initialize(string path)
         {
-            var request = (FtpWebRequest) WebRequest.Create($"ftp://{Host}{path}");
+            var request = (FtpWebRequest) WebRequest.Create($"ftp://{Host}/{path}");
             request.Credentials = new NetworkCredential(UserName, Password);
             request.EnableSsl = UseSsl;
             return request;

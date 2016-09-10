@@ -25,8 +25,8 @@ namespace DeployToFtpTests
         [TestMethod]
         public void ResponseParserGetsRightFileStyle()
         {
-            Assert.AreEqual(FileListStyle.UnixStyle, ResponseParser.SwitchFileSystem(_nixFile));
-            Assert.AreEqual(FileListStyle.WindowsStyle, ResponseParser.SwitchFileSystem(_winFile));
+            Assert.AreEqual(FileSystem.UnixStyle, ResponseParser.SwitchFileSystem(_nixFile));
+            Assert.AreEqual(FileSystem.WindowsStyle, ResponseParser.SwitchFileSystem(_winFile));
         }
 
         [TestMethod]

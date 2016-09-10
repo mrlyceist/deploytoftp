@@ -3,7 +3,7 @@
     /// <summary>
     /// Перечисление возможных файловых систем на сервере.
     /// </summary>
-    internal enum FileSystem
+    public enum FileSystem
     {
         UnixStyle,
         WindowsStyle,

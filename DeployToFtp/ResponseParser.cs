@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
+[assembly: InternalsVisibleTo("DeployToFtpTests")]
 namespace DeployToFtp
 {
     /// <summary>
@@ -29,10 +30,10 @@ namespace DeployToFtp
         /// <summary>
         /// Список всех файлов, полученных в ответе от сервера.
         /// </summary>
-        public FileStruct[] Files
+        public List<FileStruct> Files
         {
-            get { return _files.ToArray(); }
-            set { _files = value.ToList(); }
+            get { return _files; }
+            set { _files = value; }
         }
 
         /// <summary>
