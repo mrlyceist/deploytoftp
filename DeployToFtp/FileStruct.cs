@@ -2,6 +2,9 @@
 
 namespace DeployToFtp
 {
+    /// <summary>
+    /// Структура для хранения аттрибутов файла
+    /// </summary>
     public struct FileStruct
     {
         public string Flags;

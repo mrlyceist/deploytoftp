@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DeployToFtp
 {
@@ -61,8 +57,6 @@ namespace DeployToFtp
             reader.Close();
             _ftpResponce.Close();
 
-            //DirectoryListParser parser = new DirectoryListParser(content);
-            //return parser.FullListing;
             ResponseParser parser = new ResponseParser(content);
             return parser.Files;
         }

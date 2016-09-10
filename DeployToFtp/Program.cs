@@ -28,7 +28,7 @@ namespace DeployToFtp
             //string responce = ftp.ListDirectoryString("/dotNet");
 
             FileStruct[] files = ftp.ListDirectory(string.Empty);
-
+            
             Console.WriteLine(files.Length);
             foreach (var file in files)
             {

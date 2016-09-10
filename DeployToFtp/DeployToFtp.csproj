@@ -44,8 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectoryListParser.cs" />
-    <Compile Include="FileListStyle.cs" />
+    <Compile Include="FileSystem.cs" />
     <Compile Include="FileStruct.cs" />
     <Compile Include="FtpClient.cs" />
     <Compile Include="Program.cs" />

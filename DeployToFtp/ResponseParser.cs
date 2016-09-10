@@ -41,15 +41,15 @@ namespace DeployToFtp
         /// </summary>
         /// <param name="unixFile">Строка описания юникс-файла</param>
         /// <returns>Тип файловой системы FTP-сервера</returns>
-        internal static FileListStyle SwitchFileSystem(string unixFile)
+        internal static FileSystem SwitchFileSystem(string unixFile)
         {
             Regex nixStyle = new Regex(@"(-|d)((-|r)(-|w)(-|x)){3}");
             Regex winStyle = new Regex(@"[0-9]{2}-[0-9]{2}-[0-9]{2}");
             if (unixFile.Length > 10 && nixStyle.IsMatch(unixFile.Substring(0, 10)))
-                return FileListStyle.UnixStyle;
+                return FileSystem.UnixStyle;
             if (unixFile.Length > 8 && winStyle.IsMatch(unixFile.Substring(0, 8)))
-                return FileListStyle.WindowsStyle;
-            return FileListStyle.Unknown;
+                return FileSystem.WindowsStyle;
+            return FileSystem.Unknown;
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace DeployToFtp
         /// <returns>Строка флагов доступа в формате "rwxrwxrwx" или "notdeterm" (если файл пришел с Windows)</returns>
         internal static string GetFlags(string nixFile)
         {
-            if (SwitchFileSystem(nixFile) == FileListStyle.UnixStyle)
+            if (SwitchFileSystem(nixFile) == FileSystem.UnixStyle)
                 return nixFile.Substring(1, 9);
             return "notdeterm";
         }
@@ -77,7 +77,7 @@ namespace DeployToFtp
             int year    = 0;
             int hours   = 0;
             int minutes = 0;
-            if (SwitchFileSystem(nixFile)==FileListStyle.UnixStyle)
+            if (SwitchFileSystem(nixFile)==FileSystem.UnixStyle)
             {
                 string timeString = nixFile.Substring(43, 12).Trim();
                 Regex rMonth = new Regex(@"(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)", RegexOptions.IgnoreCase);
@@ -142,7 +142,7 @@ namespace DeployToFtp
                     minutes  = int.Parse(time.Substring(3, 2));
                 } 
             }
-            if (SwitchFileSystem(nixFile)==FileListStyle.WindowsStyle)
+            if (SwitchFileSystem(nixFile)==FileSystem.WindowsStyle)
             {
                 month   = int.Parse(nixFile.Substring(0, 2));
                 day     = int.Parse(nixFile.Substring(3, 2));
@@ -190,7 +190,7 @@ namespace DeployToFtp
         /// <returns>Истина, если юникс-файл - директория, иначе - Ложь</returns>
         public static bool IsItDirectory(string nixFile)
         {
-            if (SwitchFileSystem(nixFile) == FileListStyle.UnixStyle)
+            if (SwitchFileSystem(nixFile) == FileSystem.UnixStyle)
                 return nixFile[0] == 'd';
             return Regex.IsMatch(nixFile, @"(<DIR>)", RegexOptions.CultureInvariant);
         }
