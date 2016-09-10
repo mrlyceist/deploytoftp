@@ -52,6 +52,16 @@
   <ItemGroup>
     <Compile Include="DirectoryListParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResponseParserTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DeployToFtp\DeployToFtp.csproj">
+      <Project>{6cc4c038-b1fe-40ef-92d5-0e03ddda1f15}</Project>
+      <Name>DeployToFtp</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ResponseSamples.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

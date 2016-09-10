@@ -20,4 +20,16 @@
     <text>replace code tags in docs</text>
     <finished>false</finished>
   </item>
+  <item>
+    <text>Потестить с виндовым фтп</text>
+    <finished>false</finished>
+  </item>
+  <item>
+    <text>Отключить тестовый фтп и удалить пользователя</text>
+    <finished>false</finished>
+  </item>
+  <item>
+    <text>createtime - to DateTime obj</text>
+    <finished>false</finished>
+  </item>
 </Tasks>

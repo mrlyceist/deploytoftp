@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
+[assembly: InternalsVisibleTo("DeployToFtpTests")]
 namespace DeployToFtp
 {
     /// <summary>
@@ -49,7 +51,7 @@ namespace DeployToFtp
         /// </summary>
         /// <param name="filesString">Строка-ответ, полученная от сервера</param>
         /// <returns>Массив unix-файлов</returns>
-        private List<FileStruct> GetList(string filesString)
+        internal List<FileStruct> GetList(string filesString)
         {
             var filesArray = new List<FileStruct>();
             string[] fileData = filesString.Split('\n');
@@ -80,7 +82,7 @@ namespace DeployToFtp
         /// </summary>
         /// <param name="data">Строка описания файла в windows-формате</param>
         /// <returns>Файл со всеми его свойствами</returns>
-        private FileStruct ParseFileStructFromWin(string data)
+        internal FileStruct ParseFileStructFromWin(string data)
         {
             FileStruct file = new FileStruct();
             string processString = data.Trim();
@@ -112,7 +114,7 @@ namespace DeployToFtp
         /// <param name="processString">Строка, которую надо укоротить</param>
         /// <param name="i">Количество символов от начала строки, на которые будем укорачивать</param>
         /// <returns>Укороченная на i символов от начала строка</returns>
-        private static string ReduceString(string processString, int i)
+        internal static string ReduceString(string processString, int i)
         {
             return processString.Substring(i, processString.Length - i).Trim();
         }
@@ -122,7 +124,7 @@ namespace DeployToFtp
         /// </summary>
         /// <param name="data">Строка описания файла в unix-формате</param>
         /// <returns>Файл со всеми его свойствами</returns>
-        private FileStruct ParseFileStructFromNix(string data)
+        internal FileStruct ParseFileStructFromNix(string data)
         {
             FileStruct file = new FileStruct();
             if (data[0]=='-'||data[0]=='d')
@@ -147,7 +149,7 @@ namespace DeployToFtp
         /// </summary>
         /// <param name="data">Строка описания файла в unix-формате</param>
         /// <returns>Строка, содержащая дату и время создания файла</returns>
-        private string GetCreateTime(string data)
+        internal string GetCreateTime(string data)
         {
             const string month = @"(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)";
             const string space = @"(\040)+";
@@ -159,7 +161,7 @@ namespace DeployToFtp
             return match.Value;
         }
 
-        private string CutString(ref string s, char c, int startIndex)
+        internal string CutString(ref string s, char c, int startIndex)
         {
             int pos1 = s.IndexOf(c, startIndex);
             string resultString = s.Substring(0, pos1);
@@ -173,7 +175,7 @@ namespace DeployToFtp
         /// </summary>
         /// <param name="fileData">Массив строк, на который методом <seealso cref="GetList"/> будет разобран ответ сервера</param>
         /// <returns>Тип файловой системы FTP-сервера</returns>
-        private FileListStyle GuessFileListStyle(string[] fileData)
+        internal FileListStyle GuessFileListStyle(string[] fileData)
         {
             Regex nixStyle = new Regex(@"(-|d)((-|r)(-|w)(-|x)){3}");
             Regex winStyle = new Regex(@"[0-9]{2}-[0-9]{2}-[0-9]{2}");

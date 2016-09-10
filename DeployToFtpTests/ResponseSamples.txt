@@ -1,0 +1,17 @@
+﻿drwxr-xr-x    2 0        0            4096 Sep 07 19:33 software
+-rw-r--r--    1 106      114         17765 Sep 07 19:29 temp.xlsx
+01234567890123456789012345678901234567890123456789012345678901234567890
+          1         2         3         4         5         6         7
+
+nixResponse:
+drwxr-xr-x    2 0        0            4096 Sep 07 19:33 software\n-rw-r--r--    1 106      114         17765 Sep 07 19:29 temp.xlsx\n
+
+
+
+08-14-16  09:59PM                43378 License.rtf
+08-16-16  10:29PM       <DIR>          RegexTester
+0123456789012345678901234567890123456789012345678901234567890
+          1         2         3         4         5         6
+
+winResponse:
+08-14-16  09:59PM                43378 License.rtf\n08-16-16  10:29PM       <DIR>          RegexTester\n
