@@ -5,12 +5,8 @@
     <finished>true</finished>
   </item>
   <item>
-    <text>Тесты DirectoryListParser'а</text>
-    <finished>false</finished>
-  </item>
-  <item>
     <text>ftpClient ctor</text>
-    <finished>false</finished>
+    <finished>true</finished>
   </item>
   <item>
     <text>что-то с путями не то</text>
@@ -30,6 +26,6 @@
   </item>
   <item>
     <text>createtime - to DateTime obj</text>
-    <finished>false</finished>
+    <finished>true</finished>
   </item>
 </Tasks>

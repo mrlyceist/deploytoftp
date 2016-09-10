@@ -1,11 +1,13 @@
-﻿namespace DeployToFtp
+﻿using System;
+
+namespace DeployToFtp
 {
-    struct FileStruct
+    public struct FileStruct
     {
         public string Flags;
         public string Owner;
         public bool IsDirectory;
-        public string CreateTime;
+        public DateTime CreateTime;
         public string Name;
     }
 }

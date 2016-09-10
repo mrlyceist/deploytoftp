@@ -19,22 +19,23 @@ namespace DeployToFtp
         {
             FtpClient ftp = new FtpClient();
             ftp.UseSsl = false;
-            ftp.Host = _host;
-            //ftp.Host = "192.168.1.2";
+            //ftp.Host = _host;
+            ftp.Host = "192.168.1.2";
             ftp.UserName = _userName;
             ftp.Password = _password;
 
             string responce = ftp.ListDirectoryString(string.Empty);
             //string responce = ftp.ListDirectoryString("/dotNet");
 
-            //FileStruct[] files = ftp.ListDirectory(string.Empty);
+            FileStruct[] files = ftp.ListDirectory(string.Empty);
 
-            //Console.WriteLine(files.Length);
-            //foreach (var file in files)
-            //{
-            //var str = $"{file.Name}";
-            //Console.WriteLine($"{file.Name}");//, dir:{file.IsDirectory}, {file.CreateTime}, {file.Owner}");
-            //}
+            Console.WriteLine(files.Length);
+            foreach (var file in files)
+            {
+                var str = $"{file.Name}";
+                Console.WriteLine($"{file.Name}, dir:{file.IsDirectory}, {file.CreateTime}, {file.Owner}");
+            }
+            Console.WriteLine("SERVER RESPONDED:");
             Console.WriteLine(responce);
             Console.ReadLine();
         }

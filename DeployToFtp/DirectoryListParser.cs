@@ -90,7 +90,7 @@ namespace DeployToFtp
             processString = ReduceString(processString, 8);
             string timeString = processString.Substring(0, 7);
             processString = ReduceString(processString, 7);
-            file.CreateTime = $"{dateString} {timeString}";
+            //file.CreateTime = $"{dateString} {timeString}";
 
             if (processString.Substring(0, 5) == "<DIR>")
             {
@@ -135,9 +135,9 @@ namespace DeployToFtp
                 processString = processString.Substring(11).Trim();
                 CutString(ref processString, ' ', 0);
                 file.Owner = CutString(ref processString, ' ', 0);
-                file.CreateTime = GetCreateTime(data);
-                int fileNameIndex = data.IndexOf(file.CreateTime) + file.CreateTime.Length;
-                file.Name = data.Substring(fileNameIndex).Trim();
+                //file.CreateTime = GetCreateTime(data);
+                //int fileNameIndex = data.IndexOf(file.CreateTime) + file.CreateTime.Length;
+                //file.Name = data.Substring(fileNameIndex).Trim();
             }
             else
                 file.Name = string.Empty;

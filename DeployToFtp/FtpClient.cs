@@ -50,12 +50,9 @@ namespace DeployToFtp
                 directory = "/";
 
             string content = string.Empty;
-
-            //_ftpRequest = (FtpWebRequest)WebRequest.Create($"ftp://{Host}{directory}");
-            //_ftpRequest.Credentials = new NetworkCredential(UserName, Password);
+            
             _ftpRequest = Initialize(directory);
             _ftpRequest.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
-            //_ftpRequest.EnableSsl = UseSsl;
 
             _ftpResponce = (FtpWebResponse)_ftpRequest.GetResponse();
 
@@ -64,8 +61,10 @@ namespace DeployToFtp
             reader.Close();
             _ftpResponce.Close();
 
-            DirectoryListParser parser = new DirectoryListParser(content);
-            return parser.FullListing;
+            //DirectoryListParser parser = new DirectoryListParser(content);
+            //return parser.FullListing;
+            ResponseParser parser = new ResponseParser(content);
+            return parser.Files;
         }
 
         /// <summary>
@@ -79,10 +78,7 @@ namespace DeployToFtp
                 directory = "/";
 
             string content = string.Empty;
-
-            //_ftpRequest = (FtpWebRequest)WebRequest.Create($"ftp://{Host}{directory}");
-            //_ftpRequest.Credentials = new NetworkCredential(UserName, Password);
-            //_ftpRequest.EnableSsl = UseSsl;
+            
             _ftpRequest = Initialize(directory);
             _ftpRequest.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
             using (_ftpResponce = (FtpWebResponse)_ftpRequest.GetResponse())
@@ -101,11 +97,8 @@ namespace DeployToFtp
         /// <param name="fileName">Имя файла</param>
         public void DownloadFile(string path, string fileName)
         {
-            //_ftpRequest = (FtpWebRequest) WebRequest.Create($"ftp://{Host}{path}{fileName}");
-            //_ftpRequest.Credentials = new NetworkCredential(UserName, Password);
             _ftpRequest = Initialize($"{path}{fileName}");
             _ftpRequest.Method = WebRequestMethods.Ftp.DownloadFile;
-            //_ftpRequest.EnableSsl = UseSsl;
 
             FileStream downloadedFile = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite);
             _ftpResponce = (FtpWebResponse) _ftpRequest.GetResponse();
@@ -132,9 +125,6 @@ namespace DeployToFtp
             byte[] fileToBytes;
             using (FileStream uploadFile = new FileStream(fileName, FileMode.Open, FileAccess.Read))
             {
-                //_ftpRequest = (FtpWebRequest) WebRequest.Create($"ftp://{Host}{path}{shortName}");
-                //_ftpRequest.Credentials = new NetworkCredential(UserName, Password);
-                //_ftpRequest.EnableSsl = UseSsl;
                 _ftpRequest = Initialize($"{path}{shortName}");
                 _ftpRequest.Method = WebRequestMethods.File.UploadFile;
 
@@ -154,9 +144,6 @@ namespace DeployToFtp
         /// <param name="path">Путь до удаляемого файла на сервере</param>
         public void DeleteFile(string path)
         {
-            //_ftpRequest = (FtpWebRequest) WebRequest.Create($"ftp://{Host}{path}");
-            //_ftpRequest.Credentials = new NetworkCredential(UserName, Password);
-            //_ftpRequest.EnableSsl = UseSsl;
             _ftpRequest = Initialize(path);
             _ftpRequest.Method = WebRequestMethods.Ftp.DeleteFile;
             _ftpResponce = (FtpWebResponse) _ftpRequest.GetResponse();
@@ -170,9 +157,6 @@ namespace DeployToFtp
         /// <param name="folderName">Имя создаваемого каталога</param>
         public void CreateDirectory(string path, string folderName)
         {
-            //_ftpRequest = (FtpWebRequest) WebRequest.Create($"ftp://{Host}{path}{folderName}");
-            //_ftpRequest.Credentials = new NetworkCredential(UserName, Password);
-            //_ftpRequest.EnableSsl = UseSsl;
             _ftpRequest = Initialize($"{path}{folderName}");
             _ftpRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
 
@@ -187,9 +171,6 @@ namespace DeployToFtp
         public void RemoveDirectory(string path)
         {
             string fileName = path;
-            //_ftpRequest = (FtpWebRequest) WebRequest.Create($"ftp://{Host}{path}");
-            //_ftpRequest.Credentials = new NetworkCredential(UserName, Password);
-            //_ftpRequest.EnableSsl = UseSsl;
             _ftpRequest = Initialize(path);
             _ftpRequest.Method = WebRequestMethods.Ftp.RemoveDirectory;
 

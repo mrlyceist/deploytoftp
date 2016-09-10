@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using DeployToFtp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -18,14 +19,14 @@ namespace DeployToFtpTests
         private string _winFile = "08-14-16  09:59PM                43378 License.rtf";
         private string _winDir  = "08-16-16  10:29PM       <DIR>          RegexTester";
 
-        private DateTime _nixFileDate = new DateTime(2016, 9, 7, 19, 29, 0);
-        private DateTime _winFileDate = new DateTime(2016, 8, 14, 21, 59, 0);
+        private readonly DateTime _nixFileDate = new DateTime(2016, 9, 7, 19, 29, 0);
+        private readonly DateTime _winFileDate = new DateTime(2016, 8, 14, 21, 59, 0);
 
         [TestMethod]
         public void ResponseParserGetsRightFileStyle()
         {
-            Assert.AreEqual(FileListStyle.UnixStyle, ResponseParser.SwitchFileSystem(_nixResponse.Split('\n')));
-            Assert.AreEqual(FileListStyle.WindowsStyle, ResponseParser.SwitchFileSystem(_winResponcse.Split('\n')));
+            Assert.AreEqual(FileListStyle.UnixStyle, ResponseParser.SwitchFileSystem(_nixFile));
+            Assert.AreEqual(FileListStyle.WindowsStyle, ResponseParser.SwitchFileSystem(_winFile));
         }
 
         [TestMethod]
@@ -38,8 +39,14 @@ namespace DeployToFtpTests
         public void GetCreateTimeGetsTimeStringFromNixResponse()
         {
             var oldFile = "-rw-r--r--    1 106      114         17765 Nov 25 2013 temp.xlsx";
-            Assert.AreEqual("160907-19:29", ResponseParser.GetCreateTime(_nixFile));
-            Assert.AreEqual("131125-00:00", ResponseParser.GetCreateTime(oldFile));
+            Assert.AreEqual(_nixFileDate, ResponseParser.GetCreateTime(_nixFile));
+            Assert.AreEqual(new DateTime(2013, 11, 25, 0, 0, 0), ResponseParser.GetCreateTime(oldFile));
+        }
+
+        [TestMethod]
+        public void GetCreateTimeGetsRightTimeFromWinResponce()
+        {
+            Assert.AreEqual(_winFileDate, ResponseParser.GetCreateTime(_winFile));
         }
 
         [TestMethod]
@@ -56,19 +63,39 @@ namespace DeployToFtpTests
 
             Assert.AreEqual("temp.xlsx", file.Name);
             Assert.AreEqual(false, file.IsDirectory);
-            Assert.AreEqual("160907-19:29", file.CreateTime);
+            Assert.AreEqual(_nixFileDate, file.CreateTime);
             Assert.AreEqual("rw-r--r--", file.Flags);
         }
 
-        //[TestMethod]
-        //public void WinFileIsParsedCorrectly()
-        //{
-        //    FileStruct file = ResponseParser.ParseFile(_winFile);
+        [TestMethod]
+        public void WinFileIsParsedCorrectly()
+        {
+            FileStruct file = ResponseParser.ParseFile(_winFile);
 
-        //    Assert.AreEqual("License.rtf", file.Name);
-        //    Assert.AreEqual(false, file.IsDirectory);
-        //    Assert.AreEqual("160814-21:59", file.CreateTime);
-        //    Assert.AreEqual("notdeterm", file.Flags);
-        //}
+            Assert.AreEqual("License.rtf", file.Name);
+            Assert.AreEqual(false, file.IsDirectory);
+            Assert.AreEqual(_winFileDate, file.CreateTime);
+            Assert.AreEqual("notdeterm", file.Flags);
+        }
+
+        [TestMethod]
+        public void IsItDirectoryFindsOutIfFileIsDirectory()
+        {
+            Assert.IsFalse(ResponseParser.IsItDirectory(_nixFile));
+            Assert.IsFalse(ResponseParser.IsItDirectory(_winFile));
+            Assert.IsTrue(ResponseParser.IsItDirectory(_nixDir));
+            Assert.IsTrue(ResponseParser.IsItDirectory(_winDir));
+        }
+
+        [TestMethod]
+        public void ResponseParserParsesResponse()
+        {
+            var nixParser = new ResponseParser(_nixResponse);
+            var winParser = new ResponseParser(_winResponcse);
+            Assert.AreEqual(2, nixParser.Files.Count());
+            Assert.AreEqual(2, winParser.Files.Count());
+            Assert.AreEqual("temp.xlsx", nixParser.Files.Where(file => !file.IsDirectory).ToArray()[0].Name);
+            Assert.AreEqual("RegexTester", winParser.Files.Where(file => file.IsDirectory).ToArray()[0].Name);
+        }
     }
 }
