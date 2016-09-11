@@ -103,7 +103,7 @@ namespace DeployToFtp
                 Console.WriteLine("Uploading documentation to server...");
                 try
                 {
-                    ftp.UploadFile($"software/{solution}/", Path.GetFileName(compiledDocs));
+                    ftp.UploadFile($"devdocs/{solution}/", Path.GetFileName(compiledDocs));
                 }
                 catch (Exception ex)
                 {
