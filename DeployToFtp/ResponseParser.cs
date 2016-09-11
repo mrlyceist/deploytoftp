@@ -23,7 +23,8 @@ namespace DeployToFtp
             _files = new List<FileStruct>();
             foreach (string nFile in nixResponse.Trim('\n').Split('\n'))
             {
-                _files.Add(ParseFile(nFile));
+                if (!string.IsNullOrEmpty(nFile))
+                    _files.Add(ParseFile(nFile));
             }
         }
 
