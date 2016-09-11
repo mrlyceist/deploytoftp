@@ -51,6 +51,7 @@ namespace DeployToFtp
             List<FileStruct> docs     = new List<FileStruct>();
 
             var docFile = _outFile.Replace(Path.GetExtension(_outFile), ".xml");
+            var compiledDocs = _outFile.Replace(Path.GetExtension(_outFile), "Docs.chm");
 
             Console.WriteLine("Checking server...");
             try
@@ -75,7 +76,7 @@ namespace DeployToFtp
                 }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
             }
-            if (File.Exists(docFile))
+            if (File.Exists(compiledDocs))
             {
                 if (!ListContains(docs, solution))
                 {
@@ -92,15 +93,17 @@ namespace DeployToFtp
             try
             {
                 ftp.UploadFile($"software/{solution}/", Path.GetFileName(_outFile));
+                if (File.Exists(docFile))
+                    ftp.UploadFile($"software/{solution}/", Path.GetFileName(docFile));
             }
             catch (Exception ex) { Console.WriteLine(ex.Message);}
 
-            if (File.Exists(docFile))
+            if (File.Exists(compiledDocs))
             {
                 Console.WriteLine("Uploading documentation to server...");
                 try
                 {
-                    ftp.UploadFile($"software/{solution}/", Path.GetFileName(_outFile));
+                    ftp.UploadFile($"software/{solution}/", Path.GetFileName(compiledDocs));
                 }
                 catch (Exception ex)
                 {
