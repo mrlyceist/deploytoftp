@@ -15,40 +15,30 @@ namespace DeployToFtp
 
         static void Main(string[] args)
         {
-            if (!string.IsNullOrEmpty(args[0]))
-                _configuration = args[0];
-            else
+            if (args.Length != 4)
             {
-                Console.WriteLine("Lack of arguments!");
-                return;
+                Console.WriteLine("Check your arguments!");
+                Console.ReadLine();
+                Environment.Exit(0);
             }
-            if (!string.IsNullOrEmpty(args[1]))
-                _outFile = args[1];
-            else
+            _configuration = args[0];
+            _outFile       = args[1];
+            _host          = args[2];
+            if (args[3].Contains(';'))
             {
-                Console.WriteLine("Lack of arguments!");
-                return;
-            }
-            if (!string.IsNullOrEmpty(args[2]))
-                _host = args[2];
-            else
-            {
-                Console.WriteLine("Lack of arguments!");
-                return;
-            }
-            if (!string.IsNullOrEmpty(args[3]))
-            {
-                if (args[3].Contains(';'))
-                {
-                    _userName = args[3].Split(';')[0];
-                    _password = args[3].Split(';')[1];
-                }
+                _userName = args[3].Split(';')[0];
+                _password = args[3].Split(';')[1];
             }
             else
             {
-                Console.WriteLine("Lack of arguments!");
-                return;
+                Console.WriteLine("Wrong last argument format! It must be \"username;password\"");
+                Console.ReadLine();
+                Environment.Exit(0);
             }
+
+            if (_configuration != "Release")
+                Environment.Exit(0);
+
             FtpClient ftp = new FtpClient
             {
                 UseSsl   = false,
@@ -75,7 +65,7 @@ namespace DeployToFtp
                 Environment.Exit(0);
             }
 
-            string solution = GetSolution(_outFile);
+            string solution = GetSolution(_outFile).ToLower();
             if (!ListContains(binaries, solution))
             {
                 try
