@@ -46,15 +46,13 @@ namespace DeployToFtp
             if (string.IsNullOrEmpty(directory))
                 directory = "/";
 
-            string content = string.Empty;
-            
             _ftpRequest = Initialize(directory);
             _ftpRequest.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
 
             _ftpResponce = (FtpWebResponse)_ftpRequest.GetResponse();
 
             StreamReader reader = new StreamReader(_ftpResponce.GetResponseStream(), Encoding.ASCII);
-            content = reader.ReadToEnd();
+            var content = reader.ReadToEnd();
             reader.Close();
             _ftpResponce.Close();
 
@@ -72,7 +70,7 @@ namespace DeployToFtp
             if (string.IsNullOrEmpty(directory))
                 directory = "/";
 
-            string content = string.Empty;
+            string content;
             
             _ftpRequest = Initialize(directory);
             _ftpRequest.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
@@ -101,7 +99,7 @@ namespace DeployToFtp
             using (Stream responce = _ftpResponce.GetResponseStream())
             {
                 byte[] buffer = new byte[1024];
-                int size = 0;
+                int size;
                 while ((size = responce.Read(buffer, 0, 1024)) > 0)
                     downloadedFile.Write(buffer, 0, size);
                 _ftpResponce.Close();
@@ -165,7 +163,6 @@ namespace DeployToFtp
         /// <param name="path">Путь к удаляемому каталогу на сервере</param>
         public void RemoveDirectory(string path)
         {
-            string fileName = path;
             _ftpRequest = Initialize(path);
             _ftpRequest.Method = WebRequestMethods.Ftp.RemoveDirectory;
 

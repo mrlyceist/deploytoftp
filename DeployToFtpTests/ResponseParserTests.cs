@@ -92,8 +92,8 @@ namespace DeployToFtpTests
         {
             var nixParser = new ResponseParser(_nixResponse);
             var winParser = new ResponseParser(_winResponcse);
-            Assert.AreEqual(2, nixParser.Files.Count());
-            Assert.AreEqual(2, winParser.Files.Count());
+            Assert.AreEqual(2, nixParser.Files.Count);
+            Assert.AreEqual(2, winParser.Files.Count);
             Assert.AreEqual("temp.xlsx", nixParser.Files.Where(file => !file.IsDirectory).ToArray()[0].Name);
             Assert.AreEqual("RegexTester", winParser.Files.Where(file => file.IsDirectory).ToArray()[0].Name);
         }
