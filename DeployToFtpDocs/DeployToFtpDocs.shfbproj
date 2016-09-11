@@ -14,7 +14,7 @@
     <Name>DeployToFtpDocs</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
-    <OutputPath>.\Help\</OutputPath>
+    <OutputPath>..\DeployToFtp\bin\Release\</OutputPath>
     <HtmlHelpName>DeployToFtpDocs</HtmlHelpName>
     <Language>ru-RU</Language>
     <TransformComponentArguments>
@@ -80,7 +80,6 @@
   <ItemGroup>
     <None Include="Content\VersionHistory\v1.0.0.0.aml" />
     <None Include="Content\VersionHistory\VersionHistory.aml" />
-    <None Include="Content\Welcome.aml" />
   </ItemGroup>
   <ItemGroup>
     <ContentLayout Include="ContentLayout.content" />
